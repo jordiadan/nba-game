@@ -1,9 +1,9 @@
-name: Run Tests
+name: Run Tests and Coverage Check
 
 on:
   pull_request:
     branches:
-      - main  # Cambia esto al nombre de tu rama principal si es diferente
+      - main
 
 jobs:
   test:
@@ -16,10 +16,28 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: 14  # Puedes ajustar la versión de Node.js según tus necesidades
+        node-version: 14
 
     - name: Install dependencies
       run: npm install
 
-    - name: Run Tests
-      run: npm run test
+    - name: Run Tests and Coverage
+      run: npm run test -- --coverage
+
+  coverage:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 14
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Check Coverage
+      run: npm run check-coverage
