@@ -1,7 +1,7 @@
 name: Run Tests
 
 on:
-  push:
+  pull_request:
     branches:
       - main  # Cambia esto al nombre de tu rama principal si es diferente
 
